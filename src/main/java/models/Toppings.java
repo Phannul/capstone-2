@@ -5,7 +5,7 @@ public class Toppings {
     private String name;
     private String type;
     private boolean isExtra;
-
+    //Constructor
     public Toppings(String name, String type, boolean isExtra) {
         this.name = name;
         this.type = type.toLowerCase();
@@ -13,7 +13,6 @@ public class Toppings {
 
     }
     //getters
-
     public String getName() {
         return name;
     }
@@ -74,7 +73,6 @@ public class Toppings {
         else if (type.equalsIgnoreCase("veggie") || type.equalsIgnoreCase("sauce")) {
             price = 0.0;
         }
-
         return price;
     }
     // labels the name of the topping and if it was extra or not

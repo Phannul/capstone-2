@@ -8,7 +8,7 @@ public class Sandwich implements Orderables{
     private boolean isToasted;
     private double basePrice;
     private ArrayList<Toppings> toppings;
-
+    //constructor
     public Sandwich(String type, String breadLength, boolean isToasted) {
         this.breadType = type;
         this.breadLength = breadLength;
@@ -17,18 +17,16 @@ public class Sandwich implements Orderables{
         this.toppings = new ArrayList<>();
     }
     // sets base price for the sandwich in the case of no topping
-    public double setBasePrice (String breadLength){
-        double price = 0;
+    public void setBasePrice (String breadLength){
         if(breadLength.equalsIgnoreCase("4\"" )){
-            price =5.50;
+            this.basePrice =5.50;
+        }else if (breadLength.equalsIgnoreCase("8\"")) {
+            this.basePrice = 7.00;
+        }else if (breadLength.equalsIgnoreCase("Footlong")){
+            this.basePrice = 8.50;
+        }else {
+            this.basePrice = 0.0;
         }
-        if (breadLength.equalsIgnoreCase("8\"")) {
-            price = 7.00;
-        }
-        if (breadLength.equalsIgnoreCase("Footlong")){
-            price = 6.00;
-        }
-        return price;
     }
     // this adds the selected toppings to the toppings list as the ArrayList is encapsulated
     public void addTopping(Toppings t){
@@ -48,12 +46,12 @@ public class Sandwich implements Orderables{
     public String getSummary(){
         String summary = breadLength + " " + breadType + "Sandwich";
         if(isToasted) {
-            summary += " (toasted)";
+            summary += " [toasted]";
         }
         for (Toppings t : toppings){
-            summary += "\n -" + t.toppingSummary() + "\n";
+            summary += "\n -" + t.toppingSummary();
         }
-        summary += String.format("Total: %.2f", getPrice());
+        summary += String.format("\n Total: %.2f", getPrice());
         return summary;
     }
 
