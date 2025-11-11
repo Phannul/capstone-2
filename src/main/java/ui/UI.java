@@ -2,6 +2,7 @@ package ui;
 
 import models.Order;
 import models.Sandwich;
+import models.Toppings;
 
 import java.util.Scanner;
 
@@ -65,10 +66,30 @@ public class UI {
                         "Regulars: Lettuce| Peppers| Onions| Tomatoes| Jalapeños| Cucumbers| Pickles| Guacamole| Mushrooms\n" +
                         "Enter topping name (or type 'x' to finish):  ");
                 while(true){
-                    String toppingName = scanner.nextLine();
+                    String toppingName = scanner.nextLine().strip();
                     if(toppingName.equalsIgnoreCase("x")){
                         break;
                     }
+                    String category = detectCategory(toppingName);
+                    if (category == null){
+                        System.out.println("Sorry, we don't have that topping at the moment");
+                    }
+                    System.out.println("Would you like to add any extra topping? (yes/no)");
+                    String extraOrNot = scanner.nextLine();
+                    boolean isExtra;
+                    if (extraOrNot.equalsIgnoreCase("yes")) {
+                        isExtra = true;
+                    } else {
+                        isExtra = false;
+                    }
+
+                    assert category != null;
+                    Toppings topping = new Toppings(toppingName, category, isExtra);
+                    sandwich.addTopping(topping);
+
+                    System.out.println(toppingName + " " +
+                            "\Added to Sandwich");
+
                 }
             }
 
@@ -76,10 +97,10 @@ public class UI {
         }
 
     }
-    private String autoDetectCategory(String toppingName) {
+    private String detectCategory(String toppingName) {
         String lower = toppingName.toLowerCase();
-        if (lower.contains("Steak") || lower.contains("Ham") || lower.contains("Salami") ||
-                lower.contains("Roast Beef") || lower.contains("Chicken") || lower.contains("Bacon")){
+        if (lower.contains("steak") || lower.contains("ham") || lower.contains("salami") ||
+                lower.contains("roast beef") || lower.contains("chicken") || lower.contains("bacon")){
             return "meat";
         }else if (lower.contains("cheddar") || lower.contains("swiss")
                 || lower.contains("american") || lower.contains("provolone")) {
