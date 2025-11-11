@@ -1,9 +1,6 @@
 package ui;
 
-import models.Drinks;
-import models.Order;
-import models.Sandwich;
-import models.Toppings;
+import models.*;
 
 import java.util.Scanner;
 
@@ -16,25 +13,47 @@ public class UI {
 
     Scanner scanner = new Scanner(System.in);
 
-    public void start() {
+    public void start(){
+        boolean running = true;
         System.out.println("==== Welcome To DELIcious ==== \n" +
                 "How can We Help Today");
-        boolean running = true;
+        while (running){
+            System.out.println("""
+                    🏠 Home
+                    1) New Order
+                    0) Exit
+                    """);
+            String choice = scanner.nextLine().trim();
+
+            switch(choice){
+                case "1" -> startNewOrder();
+                case "0" -> running = false;
+            }
+        }
+
+    }
+
+    private void startNewOrder() {
+
+        boolean ordering = true;
 
         do {
-            System.out.println("1) Add Sandwich" +
+            System.out.println(
+                    "1) Add Sandwich" +
                     "\n2) Add Drink" +
                     "\n3) Add Chips" +
-                    "\n4) Checkout");
+                    "\n4) Checkout" +
+                    "\n0) Cancel Order ");
             String input = scanner.nextLine();
 
             switch (input) {
                 case "1" -> createSandwich();
-                case "2" -> System.out.println("addDrink");
-                case "3" -> System.out.println("addChips");
-                case "4" -> System.out.println("checkOut");
+                case "2" -> addDrink();
+                case "3" -> addChips();
+                case "4" -> checkOut();
+                case "0" -> System.out.println("cancel");
             }
-        } while (running);
+        } while (ordering);
     }
 
     private void createSandwich() {
@@ -126,8 +145,20 @@ public class UI {
         order.addOrder(drink);
     }
     private void addChips(){
+        System.out.println("\n Chips Menu: " +
+                "\n Types: Lays | Doritos | BBq | Sour cream| HotFlaminCheetos");
+        System.out.println("Enter Chips Type: ");
+        String chipsType = scanner.nextLine().strip();
 
+        Chips chip = new Chips(chipsType);
+        order.addOrder(chip);
     }
+
+    private void checkOut(){
+        System.out.println("\n Checkout Summary");
+        order.orderSummary();
+    }
+
 
     private String detectCategory(String toppingName) {
         String lower = toppingName.toLowerCase();

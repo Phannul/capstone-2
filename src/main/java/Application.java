@@ -6,10 +6,6 @@ import ui.UI;
 
 public class Application {
     public static void main(String[] args) {
-        Sandwich sandwich = new Sandwich("wheat", "4 in", true);
-        Toppings t = new Toppings("salami", "meat", false);
-        sandwich.addTopping(t);
-        System.out.println(sandwich.getSummary());
 
         Order order = new Order();
 
