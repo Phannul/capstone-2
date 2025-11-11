@@ -12,15 +12,15 @@ public class Sandwich implements Orderables{
     public Sandwich(String type, String breadLength, boolean isToasted) {
         this.breadType = type;
         this.breadLength = breadLength;
-        this.basePrice = basePrice;
         this.isToasted = isToasted;
         this.toppings = new ArrayList<>();
+        setBasePrice(breadLength);
     }
     // sets base price for the sandwich in the case of no topping
     public void setBasePrice (String breadLength){
-        if(breadLength.equalsIgnoreCase("4\"" )){
+        if(breadLength.equalsIgnoreCase("4in" )){
             this.basePrice =5.50;
-        }else if (breadLength.equalsIgnoreCase("8\"")) {
+        }else if (breadLength.equalsIgnoreCase("8in")) {
             this.basePrice = 7.00;
         }else if (breadLength.equalsIgnoreCase("Footlong")){
             this.basePrice = 8.50;
@@ -51,7 +51,7 @@ public class Sandwich implements Orderables{
         for (Toppings t : toppings){
             summary += "\n -" + t.toppingSummary();
         }
-        summary += String.format("\n Total: %.2f", getPrice());
+        summary += String.format("\nSandwich Base Price: $ %.2f", basePrice) + String.format("\nTotal Sandwich Price With topping");
         return summary;
     }
 

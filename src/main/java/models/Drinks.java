@@ -34,7 +34,6 @@ public class Drinks implements Orderables{
     @Override
     public String getSummary(){
         String summary = flavor + " " + size;
-        summary += String.format("\n" + getPrice());
         return summary;
     }
 

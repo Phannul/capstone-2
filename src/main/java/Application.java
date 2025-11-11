@@ -1,19 +1,30 @@
+import models.Drinks;
+import models.Order;
 import models.Sandwich;
 import models.Toppings;
+import ui.UI;
 
 public class Application {
     public static void main(String[] args) {
-        System.out.println();
-        Sandwich sandwich = new Sandwich("WheatBread ", "4\"", true);
-        sandwich.setBasePrice("4\"");
+        Sandwich sandwich = new Sandwich("wheat", "4 in", true);
         Toppings t = new Toppings("salami", "meat", false);
-        Toppings t1 = new Toppings("salami", "meat", false);
-        Toppings t2 = new Toppings("salami", "meat", false);
-
         sandwich.addTopping(t);
-        sandwich.addTopping(t1);
-        sandwich.addTopping(t2);
-        System.out.println(sandwich.getPrice());
         System.out.println(sandwich.getSummary());
+
+        Order order = new Order();
+
+        Sandwich sandwich2 = new Sandwich("wheat", "8 in", true);
+        sandwich2.addTopping(new Toppings("cheese", "veggie", false));
+        sandwich2.addTopping(new Toppings("ham", "meat", true));
+
+        Drinks drink = new Drinks("Cola", "large");
+
+        order.addOrder(sandwich2);
+        order.addOrder(drink);
+        order.calculateTotalPrice();
+        order.orderSummary();
+
+        UI ui = new UI();
+        ui.start();
     }
 }
