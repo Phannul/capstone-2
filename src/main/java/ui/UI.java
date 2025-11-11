@@ -1,5 +1,6 @@
 package ui;
 
+import models.Drinks;
 import models.Order;
 import models.Sandwich;
 import models.Toppings;
@@ -12,97 +13,128 @@ public class UI {
     public UI() {
         this.order = new Order();
     }
+
     Scanner scanner = new Scanner(System.in);
-    public void start(){
+
+    public void start() {
         System.out.println("==== Welcome To DELIcious ==== \n" +
                 "How can We Help Today");
         boolean running = true;
 
-        do{
+        do {
             System.out.println("1) Add Sandwich" +
                     "\n2) Add Drink" +
                     "\n3) Add Chips" +
                     "\n4) Checkout");
             String input = scanner.nextLine();
 
-            switch(input){
+            switch (input) {
                 case "1" -> createSandwich();
                 case "2" -> System.out.println("addDrink");
                 case "3" -> System.out.println("addChips");
                 case "4" -> System.out.println("checkOut");
             }
-        }while(running);
+        } while (running);
     }
-    public void createSandwich(){
 
+    private void createSandwich() {
         System.out.println("Enter Bread Type (White/Wheat/Rye/Wrap)");
         String breadType = scanner.nextLine().strip();
         System.out.println("Enter Bread length (4in/8in/Footlong)");
         String breadLength = scanner.nextLine().strip();
         boolean toasted = false;
-        while (true){
+        while (true) {
             System.out.println("Would you like it toasted(Yes/No)");
             String input = scanner.nextLine();
-            if (input.equalsIgnoreCase("yes")){
+            if (input.equalsIgnoreCase("yes")) {
                 toasted = true;
                 break;
             } else if (input.equalsIgnoreCase("no")) {
                 toasted = false;
                 break;
-            }else {
+            } else {
                 System.out.println("Invalid Entry, Please type yes/no");
             }
         }
         Sandwich sandwich = new Sandwich(breadType, breadLength, toasted);
-        boolean addingToppings = true;
-        while(addingToppings) {
-            System.out.println("Would you like any toppings? ");
-            String iNeedTopping = scanner.nextLine();
-            if (iNeedTopping.equalsIgnoreCase("yes")) {
-                System.out.println("Awesome!!\n" +
-                        "Here are the Topping we have: \n" +
-                        "🥩Meats: Steak| Ham| Salami| Roast Beef| Chicken| Bacon\n" +
-                        "🧀Cheeses: American| Provolone| Cheddar| Swiss\n" +
-                        "Regulars: Lettuce| Peppers| Onions| Tomatoes| Jalapeños| Cucumbers| Pickles| Guacamole| Mushrooms\n" +
-                        "Enter topping name (or type 'x' to finish):  ");
-                while(true){
-                    String toppingName = scanner.nextLine().strip();
-                    if(toppingName.equalsIgnoreCase("x")){
-                        break;
-                    }
-                    String category = detectCategory(toppingName);
-                    if (category == null){
-                        System.out.println("Sorry, we don't have that topping at the moment");
-                    }
-                    System.out.println("Would you like to add any extra topping? (yes/no)");
-                    String extraOrNot = scanner.nextLine();
-                    boolean isExtra;
-                    if (extraOrNot.equalsIgnoreCase("yes")) {
-                        isExtra = true;
-                    } else {
-                        isExtra = false;
-                    }
 
-                    assert category != null;
-                    Toppings topping = new Toppings(toppingName, category, isExtra);
-                    sandwich.addTopping(topping);
 
-                    System.out.println(toppingName + " " +
-                            "\Added to Sandwich");
+        System.out.println("Would you like any toppings? ");
+        String iNeedTopping = scanner.nextLine();
+
+        if (iNeedTopping.equalsIgnoreCase("yes")) {
+            toppingMenu();
+            System.out.println("Enter topping name (or type 'done' to finish):  ");
+            while (true) {
+                String toppingName = scanner.nextLine().strip();
+                if (toppingName.equalsIgnoreCase("done")) {
+                    break;
+                }
+                String category = detectCategory(toppingName);
+                if (category == null) {
+                    System.out.println("Sorry, we don't have that topping at the moment");
+                }
+                assert category != null;
+                Toppings topping = new Toppings(toppingName, category, false);
+                sandwich.addTopping(topping);
+
+            }
+        }
+        System.out.println("Would you like to add any extra topping? (yes/no)");
+        String extraOrNot = scanner.nextLine();
+        if (extraOrNot.equalsIgnoreCase("yes")){
+            System.out.println("Good, which extra topping would you like to add? ");
+            toppingMenu();
+            while(true){
+                System.out.println("Enter extra topping name(or 'x' to finish): ");
+                String extraToppingName = scanner.nextLine().strip();
+
+                if (extraToppingName.equalsIgnoreCase("x")){
+                    break;
+                }
+                String category = detectCategory(extraToppingName);
+
+                if (category == null) {
+                    System.out.println("Sorry, we don't have that topping available as extra");
 
                 }
+                Toppings extraTopping = new Toppings(extraToppingName, category, true);
+                sandwich.addTopping(extraTopping);
             }
-
-
         }
+        order.addOrder(sandwich);
+        System.out.println("Sandwich Added to Order");
+    }
+
+    private void toppingMenu() {
+        System.out.println("Awesome!!\n" +
+                "Here are the Topping we have: \n" +
+                "🥩Meats: Steak| Ham| Salami| Roast Beef| Chicken| Bacon\n" +
+                "🧀Cheeses: American| Provolone| Cheddar| Swiss\n" +
+                "Regulars: Lettuce| Peppers| Onions| Tomatoes| Jalapeños| Cucumbers| Pickles| Guacamole| Mushrooms\n");
+    }
+    private void addDrink(){
+        System.out.println("\n 🥤 Drink Menu: " +
+                "\n Flavors: Coke | Pepsi | Sprite | Water | Iced Tea");
+        System.out.println("Enter Drink Flavor: ");
+        String drinkFlavor = scanner.nextLine().strip();
+
+        System.out.println("Enter Drink Size (Small/Medium/Large): ");
+        String drinkSize = scanner.nextLine().strip();
+
+        Drinks drink = new Drinks(drinkFlavor, drinkSize);
+        order.addOrder(drink);
+    }
+    private void addChips(){
 
     }
+
     private String detectCategory(String toppingName) {
         String lower = toppingName.toLowerCase();
         if (lower.contains("steak") || lower.contains("ham") || lower.contains("salami") ||
-                lower.contains("roast beef") || lower.contains("chicken") || lower.contains("bacon")){
+                lower.contains("roast beef") || lower.contains("chicken") || lower.contains("bacon")) {
             return "meat";
-        }else if (lower.contains("cheddar") || lower.contains("swiss")
+        } else if (lower.contains("cheddar") || lower.contains("swiss")
                 || lower.contains("american") || lower.contains("provolone")) {
             return "cheese";
         } else if (lower.contains("lettuce") || lower.contains("tomato")
