@@ -67,7 +67,7 @@ options
         back(breadLength);
         boolean toasted = false;
         while (true) {
-            System.out.println("Would you like it toasted(Yes/No) or type 'b' to go back");
+            System.out.println("Do you want it to be toasted(Yes/No) or type 'b' to go back");
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("yes")) {
                 toasted = true;
@@ -165,7 +165,8 @@ options
             return;
         }
         System.out.println("\n Checkout Summary");
-        System.out.println("Name - " + getName());
+        String name = getName();
+        order.setCustomerName(name);
         order.orderSummary();
         System.out.println("Type '1' to confirm the order or type 'b' to go back");
         String confirm = scanner.nextLine().strip();

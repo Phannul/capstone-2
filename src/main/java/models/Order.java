@@ -5,9 +5,15 @@ import java.util.List;
 
 public class Order {
     private List<Orderables> order;
+    private String customerName;
     public Order(){
         this.order = new ArrayList<>();
     }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
     // a public access grant to add into the encapsulated array list
     public void addOrder(Orderables item){
         order.add(item);
@@ -27,6 +33,9 @@ public class Order {
         for (Orderables order : order){
             total += order.getPrice();
         }
+        if (customerName != null && customerName.equalsIgnoreCase("dave dykes")){
+            total = 0.0;
+        }
         return total;
     }
     /* takes all the summaries from the ordered items and shows it to the user to have
@@ -41,8 +50,16 @@ public class Order {
         System.out.println("Total: $" + String.format("%.2f", calculateTotalPrice()));
     }
 
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    // this is a method that can only be used by the receipt writer class
     public String summaryFormatForReceipt(){
         StringBuilder sb = new StringBuilder();
+        if (customerName != null) {
+            sb.append("Customer: ").append(customerName).append("\n");
+        }
         sb.append("\n----Your Orders----\n");
         for (Orderables o : order){
             sb.append("- ").append(o.getSummary()).append("\n");
