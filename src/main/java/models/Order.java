@@ -16,6 +16,9 @@ public class Order {
     public void removeItem(Orderables item){
         order.remove(item);
     }
+    public boolean isEmpty(){
+        return order.isEmpty();
+    }
     /* this method goes through every ordered items in the order arraylist and gives
     the total
      */

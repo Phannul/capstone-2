@@ -6,13 +6,11 @@ import java.util.Scanner;
 import util.ReceiptWriter;
 public class UI {
     private Order order;
-
     public UI() {
         this.order = new Order();
     }
-
     Scanner scanner = new Scanner(System.in);
-
+    //A starter method as a gate way into the application
     public void start(){
         boolean running = true;
         System.out.println("==== Welcome To DELIcious ==== \n" +
@@ -32,11 +30,10 @@ public class UI {
         }
 
     }
-
+    // The ordering screen menu to let users use what they want to do with the app
     private void startNewOrder() {
-
         boolean ordering = true;
-
+    // This loop will allow the menu to keep on prompting the user until they successfully checkout or cancel
         do {
             System.out.println(
                     "1) Add Sandwich" +
@@ -45,7 +42,6 @@ public class UI {
                     "\n4) Checkout" +
                     "\n0) Cancel Order ");
             String input = scanner.nextLine();
-
             switch (input) {
                 case "1" -> createSandwich();
                 case "2" -> addDrink();
@@ -55,15 +51,20 @@ public class UI {
             }
         } while (ordering);
     }
-
+/*
+A method to create sandwich: It allows the user to choose from variety of topping, bread and size
+options
+*/
     private void createSandwich() {
-        System.out.println("Enter Bread Type (White/Wheat/Rye/Wrap)");
+        System.out.println("Enter Bread Type (White/Wheat/Rye/Wrap) or type 'b to go back'");
         String breadType = scanner.nextLine().strip();
-        System.out.println("Enter Bread length (4in/8in/Footlong)");
+        back(breadType);
+        System.out.println("Enter Bread length (4in/8in/Footlong) or type 'b' to go back");
         String breadLength = scanner.nextLine().strip();
+        back(breadLength);
         boolean toasted = false;
         while (true) {
-            System.out.println("Would you like it toasted(Yes/No)");
+            System.out.println("Would you like it toasted(Yes/No) or type 'b' to go back");
             String input = scanner.nextLine();
             if (input.equalsIgnoreCase("yes")) {
                 toasted = true;
@@ -71,6 +72,8 @@ public class UI {
             } else if (input.equalsIgnoreCase("no")) {
                 toasted = false;
                 break;
+            } else if (input.equalsIgnoreCase("b")) {
+                back(input);
             } else {
                 System.out.println("Invalid Entry, Please type yes/no");
             }
@@ -135,30 +138,36 @@ public class UI {
     private void addDrink(){
         System.out.println("\n 🥤 Drink Menu: " +
                 "\n Flavors: Coke | Pepsi | Sprite | Water | Iced Tea");
-        System.out.println("Enter Drink Flavor: ");
+        System.out.println("Enter Drink Flavor (or type 'b' to go back): ");
         String drinkFlavor = scanner.nextLine().strip();
-
+        back(drinkFlavor);
         System.out.println("Enter Drink Size (Small/Medium/Large): ");
         String drinkSize = scanner.nextLine().strip();
-
         Drinks drink = new Drinks(drinkFlavor, drinkSize);
         order.addOrder(drink);
     }
     private void addChips(){
         System.out.println("\n Chips Menu: " +
                 "\n Types: Lays | Doritos | BBq | Sour cream| HotFlaminCheetos");
-        System.out.println("Enter Chips Type: ");
+        System.out.println("Enter Chips Type (or type 'b' to go back): ");
         String chipsType = scanner.nextLine().strip();
-
+        back(chipsType);
         Chips chip = new Chips(chipsType);
         order.addOrder(chip);
     }
 
     private void checkOut(){
+        if (order.isEmpty()){
+            System.err.println("⚠️You can't checkout an empty order");
+            return;
+        }
+        getName();
         System.out.println("\n Checkout Summary");
+        System.out.println("Name - " + getName());
         order.orderSummary();
-        System.out.println("Type '1' to confirm the order");
+        System.out.println("Type '1' to confirm the order or type 'b' to go back");
         String confirm = scanner.nextLine().strip();
+        back(confirm);
         if (confirm.equalsIgnoreCase("1")){
             ReceiptWriter receiptWriter = new ReceiptWriter();
             receiptWriter.saveReceipt(order);
@@ -167,8 +176,16 @@ public class UI {
             System.out.println("Failed to Confirm your order");
         }
     }
-
-
+    private void back(String input){
+        if (input.equalsIgnoreCase("b")){
+            startNewOrder();
+        }
+    }
+    public String getName(){
+        System.out.println("What will be the Name for the Order: ");
+        String name = scanner.nextLine().strip();
+        return name;
+    }
     private String detectCategory(String toppingName) {
         String lower = toppingName.toLowerCase();
         if (lower.contains("steak") || lower.contains("ham") || lower.contains("salami") ||

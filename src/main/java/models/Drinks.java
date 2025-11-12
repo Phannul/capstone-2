@@ -33,7 +33,7 @@ public class Drinks implements Orderables{
     //Overridden method to get the summary of the ordered drink while implementing Orderables
     @Override
     public String getSummary(){
-        String summary = "Drink- " + flavor + " " + size;
+        String summary = "Drink - " + flavor + " " + size;
         return summary;
     }
 

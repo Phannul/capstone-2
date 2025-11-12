@@ -1,6 +1,7 @@
 package util;
 
 import models.Order;
+import ui.UI;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -12,7 +13,7 @@ public class ReceiptWriter {
 
     public void saveReceipt(Order order) {
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path,true))) {
-            bufferedWriter.write("==== DELIcious Receipt ==== \n");
+            bufferedWriter.write("\n ==== DELIcious Receipt ==== \n");
             bufferedWriter.write("Date: " + LocalDateTime.now());
             bufferedWriter.write(order.summaryFormatForReceipt());
             bufferedWriter.write("\n==========================================\n");
