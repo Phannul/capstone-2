@@ -47,7 +47,10 @@ public class UI {
                 case "2" -> addDrink();
                 case "3" -> addChips();
                 case "4" -> checkOut();
-                case "0" -> ordering = false;
+                case "0" -> {
+                    order = new Order();
+                    ordering = false;
+                }
             }
         } while (ordering);
     }
@@ -161,7 +164,6 @@ options
             System.err.println("⚠️You can't checkout an empty order");
             return;
         }
-        getName();
         System.out.println("\n Checkout Summary");
         System.out.println("Name - " + getName());
         order.orderSummary();
