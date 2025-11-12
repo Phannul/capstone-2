@@ -6,20 +6,6 @@ import ui.UI;
 
 public class Application {
     public static void main(String[] args) {
-
-        Order order = new Order();
-
-        Sandwich sandwich2 = new Sandwich("wheat", "8 in", true);
-        sandwich2.addTopping(new Toppings("cheese", "veggie", false));
-        sandwich2.addTopping(new Toppings("ham", "meat", true));
-
-        Drinks drink = new Drinks("Cola", "large");
-
-        order.addOrder(sandwich2);
-        order.addOrder(drink);
-        order.calculateTotalPrice();
-        order.orderSummary();
-
         UI ui = new UI();
         ui.start();
     }

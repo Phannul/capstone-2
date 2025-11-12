@@ -38,4 +38,16 @@ public class Order {
         System.out.println("Total: $" + String.format("%.2f", calculateTotalPrice()));
     }
 
+    public String summaryFormatForReceipt(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("\n----Your Orders----\n");
+        for (Orderables o : order){
+            sb.append("- ").append(o.getSummary()).append("\n");
+        }
+        sb.append("______________\n");
+        sb.append("Total: $").append(String.format("%.2f", calculateTotalPrice())).append("\n");
+        return sb.toString();
+    }
+
+
 }

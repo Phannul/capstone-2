@@ -44,7 +44,7 @@ public class Sandwich implements Orderables{
     //gets the overview of ordered sandwich with corresponding toppings
     @Override
     public String getSummary(){
-        String summary = breadLength + " " + breadType + "Sandwich";
+        String summary = breadLength + " " + breadType + " Sandwich";
         if(isToasted) {
             summary += " [toasted]";
         }

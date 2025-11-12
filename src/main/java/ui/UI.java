@@ -3,7 +3,7 @@ package ui;
 import models.*;
 
 import java.util.Scanner;
-
+import util.ReceiptWriter;
 public class UI {
     private Order order;
 
@@ -51,7 +51,7 @@ public class UI {
                 case "2" -> addDrink();
                 case "3" -> addChips();
                 case "4" -> checkOut();
-                case "0" -> System.out.println("cancel");
+                case "0" -> ordering = false;
             }
         } while (ordering);
     }
@@ -157,6 +157,15 @@ public class UI {
     private void checkOut(){
         System.out.println("\n Checkout Summary");
         order.orderSummary();
+        System.out.println("Type '1' to confirm the order");
+        String confirm = scanner.nextLine().strip();
+        if (confirm.equalsIgnoreCase("1")){
+            ReceiptWriter receiptWriter = new ReceiptWriter();
+            receiptWriter.saveReceipt(order);
+            order = new Order();
+        }else{
+            System.out.println("Failed to Confirm your order");
+        }
     }
 
 

@@ -77,7 +77,7 @@ public class Toppings {
     }
     // labels the name of the topping and if it was extra or not
     public String toppingSummary(){
-        String summary = name ;
+        String summary = name + "- " + type ;
         if (isExtra){
             summary += " [Extra] ";
         }

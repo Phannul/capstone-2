@@ -13,7 +13,7 @@ public class Chips implements Orderables{
     }
     @Override
     public String getSummary(){
-        return chipType + " " + price;
+        return "Chips- " + chipType + " " + price;
     }
 
 
