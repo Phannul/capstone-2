@@ -2,6 +2,7 @@ package ui;
 
 import models.*;
 
+import java.util.Locale;
 import java.util.Scanner;
 import util.ReceiptWriter;
 public class UI {
@@ -48,8 +49,22 @@ public class UI {
                 case "3" -> addChips();
                 case "4" -> checkOut();
                 case "0" -> {
-                    order = new Order();
-                    ordering = false;
+                    System.out.println("Are you sure you want to cancel your order?\n" +
+                            "1) yes \n" +
+                            "2) No \n");
+                    String confirm = scanner.nextLine();
+                    switch(confirm){
+                        case "1" -> {
+                            order = new Order();
+                            startNewOrder();
+                            System.out.println("Order Successfully Canceled");
+                        }
+                        case "2" -> startNewOrder();
+                    }
+                }
+                default -> {
+                    System.err.println("❌ Invalid Entry");
+                    startNewOrder();
                 }
             }
         } while (ordering);
@@ -59,11 +74,36 @@ A method to create sandwich: It allows the user to choose from variety of toppin
 options
 */
     private void createSandwich() {
-        System.out.println("Enter Bread Type (White/Wheat/Rye/Wrap) or type 'b' to go back'");
+        System.out.println("Choose Bread Type \n" +
+                "1) White \n" +
+                "2) Wheat \n" +
+                "3) Rye \n" +
+                "4) Wrap \n" +
+                "B) back'");
         String breadType = scanner.nextLine().strip();
+        switch(breadType){
+            case "1" -> breadType = "white";
+            case "2" -> breadType = "wheat";
+            case "3" -> breadType = "rye";
+            case "4" -> breadType = "Wrap";
+            default -> {
+                System.err.println("❌ Invalid Entry");
+                createSandwich();
+            }
+        }
         back(breadType);
-        System.out.println("Enter Bread length (4in/8in/Footlong) or type 'b' to go back");
+        System.out.println("Enter Bread length \n" +
+                "4) 4in\n" +
+                "8) 8in\n" +
+                "f) Footlong\n " +
+                "B) Back");
         String breadLength = scanner.nextLine().strip();
+        String footlong = "f";
+        switch (breadLength){
+            case "4" -> breadLength = "4in";
+            case "8" -> breadLength = "8in";
+            case "f" -> breadLength = "FootLong";
+        }
         back(breadLength);
         boolean toasted = false;
         while (true) {
@@ -98,6 +138,7 @@ options
                 String category = detectCategory(toppingName);
                 if (category == null) {
                     System.out.println("Sorry, we don't have that topping at the moment");
+                    toppingMenu();
                 }
                 assert category != null;
                 Toppings topping = new Toppings(toppingName, category, false);
@@ -121,6 +162,7 @@ options
 
                 if (category == null) {
                     System.out.println("Sorry, we don't have that topping available as extra");
+                    toppingMenu();
 
                 }
                 Toppings extraTopping = new Toppings(extraToppingName, category, true);
