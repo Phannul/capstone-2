@@ -25,7 +25,7 @@ public class UI {
 
             switch(choice){
                 case "1" -> startNewOrder();
-                case "0" -> running = false;
+                case "0" -> System.exit(0);
             }
         }
 
@@ -59,7 +59,7 @@ A method to create sandwich: It allows the user to choose from variety of toppin
 options
 */
     private void createSandwich() {
-        System.out.println("Enter Bread Type (White/Wheat/Rye/Wrap) or type 'b to go back'");
+        System.out.println("Enter Bread Type (White/Wheat/Rye/Wrap) or type 'b' to go back'");
         String breadType = scanner.nextLine().strip();
         back(breadType);
         System.out.println("Enter Bread length (4in/8in/Footlong) or type 'b' to go back");
@@ -111,10 +111,10 @@ options
             System.out.println("Good, which extra topping would you like to add? ");
             toppingMenu();
             while(true){
-                System.out.println("Enter extra topping name(or 'x' to finish): ");
+                System.out.println("Enter extra topping name(or 'done' to finish): ");
                 String extraToppingName = scanner.nextLine().strip();
 
-                if (extraToppingName.equalsIgnoreCase("x")){
+                if (extraToppingName.equalsIgnoreCase("done")){
                     break;
                 }
                 String category = detectCategory(extraToppingName);
@@ -175,6 +175,7 @@ options
             ReceiptWriter receiptWriter = new ReceiptWriter();
             receiptWriter.saveReceipt(order);
             order = new Order();
+            start();
         }else{
             System.out.println("Failed to Confirm your order");
         }

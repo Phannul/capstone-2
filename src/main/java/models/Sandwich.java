@@ -49,9 +49,10 @@ public class Sandwich implements Orderables{
             summary += " [toasted]";
         }
         for (Toppings t : toppings){
-            summary += "\n -" + t.toppingSummary();
+            double individualToppingPrice = t.calculatePrice(breadLength);
+            summary += "\n -" + t.toppingSummary() + String.format("- %.2f", individualToppingPrice);
         }
-        summary += String.format("\nSandwich Base Price: $ %.2f", basePrice) + String.format("\nTotal Sandwich Price With topping");
+        summary += String.format("\nSandwich Base Price: $ %.2f", basePrice);
         return summary;
     }
 

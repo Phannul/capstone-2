@@ -36,6 +36,12 @@ public class Order {
         if (customerName != null && customerName.equalsIgnoreCase("dave dykes")){
             total = 0.0;
         }
+        if (customerName != null && (customerName.equalsIgnoreCase("helena kim") || customerName.equalsIgnoreCase("klayton huneycutt"))){
+            total = 0.0;
+            for (Orderables o : order){
+                total += o.getPrice() * 2;
+            }
+        }
         return total;
     }
     /* takes all the summaries from the ordered items and shows it to the user to have
@@ -44,7 +50,7 @@ public class Order {
     public void orderSummary(){
         System.out.println("----- Order Details -----");
         for (Orderables order : order){
-            System.out.println("- " + order.getSummary() + " : $" + String.format("%.2f", order.getPrice()));
+            System.out.println("- " + order.getSummary());
         }
         System.out.println("___________________");
         System.out.println("Total: $" + String.format("%.2f", calculateTotalPrice()));
@@ -57,9 +63,6 @@ public class Order {
     // this is a method that can only be used by the receipt writer class
     public String summaryFormatForReceipt(){
         StringBuilder sb = new StringBuilder();
-        if (customerName != null) {
-            sb.append("Customer: ").append(customerName).append("\n");
-        }
         sb.append("\n----Your Orders----\n");
         for (Orderables o : order){
             sb.append("- ").append(o.getSummary()).append("\n");

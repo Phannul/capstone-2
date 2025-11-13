@@ -21,11 +21,11 @@ public class ReceiptWriter {
             bufferedWriter.write("\n ==== DELIcious Receipt ==== \n");
             bufferedWriter.write("Date: " + LocalDateTime.now());
             if (order.getCustomerName() != null) {
-                bufferedWriter.write("Customer: " + order.getCustomerName() + "\n");
+                bufferedWriter.write("\n Customer: " + order.getCustomerName() + "\n");
             }
             bufferedWriter.write(order.summaryFormatForReceipt());
             bufferedWriter.write("\n==========================================\n");
-
+            bufferedWriter.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
