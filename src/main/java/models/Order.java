@@ -6,8 +6,21 @@ import java.util.List;
 public class Order {
     private List<Orderables> order;
     private String customerName;
+    private String coupon;
     public Order(){
         this.order = new ArrayList<>();
+    }
+
+    public String getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(String coupon) {
+        this.coupon = coupon;
+    }
+
+    public String getCustomerName() {
+        return customerName;
     }
 
     public void setCustomerName(String customerName) {
@@ -42,6 +55,12 @@ public class Order {
                 total += o.getPrice() * 2;
             }
         }
+        if (coupon != null && (coupon.equalsIgnoreCase("fanuelisgreat")) || (coupon.equalsIgnoreCase("ihategarlic"))){
+           total = 0.0;
+           for (Orderables discount : order){
+               total += discount.getPrice() * 0.75;
+           }
+        }
         return total;
     }
     /* takes all the summaries from the ordered items and shows it to the user to have
@@ -54,10 +73,6 @@ public class Order {
         }
         System.out.println("___________________");
         System.out.println("Total: $" + String.format("%.2f", calculateTotalPrice()));
-    }
-
-    public String getCustomerName() {
-        return customerName;
     }
 
     // this is a method that can only be used by the receipt writer class

@@ -23,6 +23,9 @@ public class ReceiptWriter {
             if (order.getCustomerName() != null) {
                 bufferedWriter.write("\n Customer: " + order.getCustomerName() + "\n");
             }
+            if (order.getCoupon() != null){
+                bufferedWriter.write("\n Coupon used = " + order.getCoupon() + " 25% off");
+            }
             bufferedWriter.write(order.summaryFormatForReceipt());
             bufferedWriter.write("\n==========================================\n");
             bufferedWriter.flush();

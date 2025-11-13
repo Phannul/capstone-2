@@ -129,22 +129,6 @@ options
             }
         }
         back(breadLength);
-//        boolean toasted = false;
-//        while (true) {
-//            System.out.println("Do you want it to be toasted(Yes/No) or type 'b' to go back");
-//            String input = scanner.nextLine();
-//            if (input.equalsIgnoreCase("yes")) {
-//                toasted = true;
-//                break;
-//            } else if (input.equalsIgnoreCase("no")) {
-//                toasted = false;
-//                break;
-//            } else if (input.equalsIgnoreCase("b")) {
-//                back(input);
-//            } else {
-//                System.out.println("Invalid Entry, Please type yes/no");
-//            }
-//        }
         Sandwich sandwich = new Sandwich(breadType, breadLength, toasted);
 
 
@@ -163,6 +147,7 @@ options
                 if (category == null) {
                     System.out.println("Sorry, we don't have that topping at the moment");
                     toppingMenu();
+                    continue;
                 }
                 assert category != null;
                 Toppings topping = new Toppings(toppingName, category, false);
@@ -187,7 +172,7 @@ options
                 if (category == null) {
                     System.out.println("Sorry, we don't have that topping available as extra");
                     toppingMenu();
-
+                    continue;
                 }
                 Toppings extraTopping = new Toppings(extraToppingName, category, true);
                 sandwich.addTopping(extraTopping);
@@ -206,7 +191,12 @@ options
     }
     private void addDrink(){
         System.out.println("\n 🥤 Drink Menu: " +
-                "\n Flavors: Coke | Pepsi | Sprite | Water | Iced Tea");
+                "\n Flavors: " +
+                "\n 1) Coke " +
+                "\n 2) Pepsi " +
+                "\n 3) Sprite " +
+                "\n 4) Water " +
+                "\n 5) Iced Tea");
         System.out.println("Enter Drink Flavor (or type 'b' to go back): ");
         String drinkFlavor = scanner.nextLine().strip();
         back(drinkFlavor);
@@ -233,6 +223,11 @@ options
         System.out.println("\n Checkout Summary");
         String name = getName();
         order.setCustomerName(name);
+        String code = getCoupon();
+        order.setCoupon(code);
+        if (order.getCoupon().isEmpty()){
+            order.orderSummary();
+        }
         order.orderSummary();
         System.out.println("Type '1' to confirm the order or type 'b' to go back");
         String confirm = scanner.nextLine().strip();
@@ -255,6 +250,12 @@ options
         System.out.println("What will be the Name for the Order: ");
         String name = scanner.nextLine().strip();
         return name;
+    }
+    public String getCoupon(){
+        System.out.println("Do you have a coupon code?\n" +
+                "Enter here (or press return to skip):");
+        String code = scanner.nextLine().strip();
+        return code;
     }
     private String detectCategory(String toppingName) {
         String lower = toppingName.toLowerCase();
