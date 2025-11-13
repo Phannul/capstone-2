@@ -34,14 +34,14 @@ public class UI {
     // The ordering screen menu to let users use what they want to do with the app
     private void startNewOrder() {
         boolean ordering = true;
-    // This loop will allow the menu to keep on prompting the user until they successfully checkout or cancel
+    // This loop will allow the menu to keep on prompting the user until they successfully checkout or cancel order
         do {
             System.out.println(
-                    "1) Add Sandwich" +
-                    "\n2) Add Drink" +
-                    "\n3) Add Chips" +
-                    "\n4) Checkout" +
-                    "\n0) Cancel Order ");
+                    "1) 🥪Add Sandwich" +
+                    "\n2) 🥤Add Drink" +
+                    "\n3) 🍟Add Chips" +
+                    "\n4) 🧾Checkout" +
+                    "\n0) ❌Cancel Order ");
             String input = scanner.nextLine();
             switch (input) {
                 case "1" -> createSandwich();
@@ -130,11 +130,8 @@ options
         }
         back(breadLength);
         Sandwich sandwich = new Sandwich(breadType, breadLength, toasted);
-
-
         System.out.println("Would you like any toppings? ");
         String iNeedTopping = scanner.nextLine();
-
         if (iNeedTopping.equalsIgnoreCase("yes")) {
             toppingMenu();
             System.out.println("Enter topping name (or type 'done' to finish):  ");
@@ -181,7 +178,9 @@ options
         order.addOrder(sandwich);
         System.out.println("Sandwich Added to Order");
     }
-
+    /*a separate method to give the user the variety of toppings the shop has
+    to avoid typing it again anda again when needed
+     */
     private void toppingMenu() {
         System.out.println("Awesome!!\n" +
                 "Here are the Topping we have: \n" +
@@ -189,6 +188,7 @@ options
                 "🧀Cheeses: American| Provolone| Cheddar| Swiss\n" +
                 "Regulars: Lettuce| Peppers| Onions| Tomatoes| Jalapeños| Cucumbers| Pickles| Guacamole| Mushrooms\n");
     }
+    // an add drink method to add drink into an order
     private void addDrink(){
         System.out.println("\n 🥤 Drink Menu: " +
                 "\n Flavors: " +
@@ -205,6 +205,7 @@ options
         Drinks drink = new Drinks(drinkFlavor, drinkSize);
         order.addOrder(drink);
     }
+    // a method to add chips into the order
     private void addChips(){
         System.out.println("\n Chips Menu: " +
                 "\n Types: Lays | Doritos | BBq | Sour cream| HotFlaminCheetos");
@@ -214,7 +215,10 @@ options
         Chips chip = new Chips(chipsType);
         order.addOrder(chip);
     }
-
+    /* a method that confirms if the user wants to proceed with their order and pay for it
+    also asks for the name to be incorporated into the order plus if they have coupon
+    and commands the receipt writer to save it as receipt
+     */
     private void checkOut(){
         if (order.isEmpty()){
             System.err.println("⚠️You can't checkout an empty order");
@@ -241,22 +245,29 @@ options
             System.out.println("Failed to Confirm your order");
         }
     }
+    // a back method that takes back to the main order screen
     private void back(String input){
         if (input.equalsIgnoreCase("b")){
             startNewOrder();
         }
     }
+    // a method to prompt the user to enter their name during checkout
     public String getName(){
         System.out.println("What will be the Name for the Order: ");
         String name = scanner.nextLine().strip();
         return name;
     }
+    // a method to prompt the user to use their cupons if they have
     public String getCoupon(){
         System.out.println("Do you have a coupon code?\n" +
                 "Enter here (or press return to skip):");
         String code = scanner.nextLine().strip();
         return code;
     }
+    /*
+    This is the method responsible to match the topping name with their corresponding
+    category for pricing purposes
+     */
     private String detectCategory(String toppingName) {
         String lower = toppingName.toLowerCase();
         if (lower.contains("steak") || lower.contains("ham") || lower.contains("salami") ||

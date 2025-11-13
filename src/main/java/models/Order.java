@@ -10,7 +10,7 @@ public class Order {
     public Order(){
         this.order = new ArrayList<>();
     }
-
+// getters and setters
     public String getCoupon() {
         return coupon;
     }
@@ -39,7 +39,8 @@ public class Order {
         return order.isEmpty();
     }
     /* this method goes through every ordered items in the order arraylist and gives
-    the total
+    the total, also takes responsibility to fetch customized pricing in the case of
+    certain names and coupons
      */
     public double calculateTotalPrice(){
         double total = 0;
