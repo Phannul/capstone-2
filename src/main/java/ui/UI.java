@@ -52,7 +52,7 @@ public class UI {
                     System.out.println("Are you sure you want to cancel your order?\n" +
                             "1) yes \n" +
                             "2) No \n");
-                    String confirm = scanner.nextLine();
+                    String confirm = scanner.nextLine().strip();
                     switch(confirm){
                         case "1" -> {
                             order = new Order();
@@ -60,6 +60,10 @@ public class UI {
                             System.out.println("Order Successfully Canceled");
                         }
                         case "2" -> startNewOrder();
+                        default -> {
+                            System.err.println("❌ Invalid Entry");
+                            startNewOrder();
+                        }
                     }
                 }
                 default -> {
@@ -92,19 +96,6 @@ options
             }
         }
         back(breadType);
-        System.out.println("Enter Bread length \n" +
-                "4) 4in\n" +
-                "8) 8in\n" +
-                "f) Footlong\n " +
-                "B) Back");
-        String breadLength = scanner.nextLine().strip();
-        String footlong = "f";
-        switch (breadLength){
-            case "4" -> breadLength = "4in";
-            case "8" -> breadLength = "8in";
-            case "f" -> breadLength = "FootLong";
-        }
-        back(breadLength);
         boolean toasted = false;
         while (true) {
             System.out.println("Do you want it to be toasted(Yes/No) or type 'b' to go back");
@@ -121,6 +112,39 @@ options
                 System.out.println("Invalid Entry, Please type yes/no");
             }
         }
+        System.out.println("Enter Bread length \n" +
+                "4) 4in\n" +
+                "8) 8in\n" +
+                "f) Footlong\n" +
+                "B) Back");
+        String breadLength = scanner.nextLine().strip();
+        String footlong = "f";
+        switch (breadLength){
+            case "4" -> breadLength = "4in";
+            case "8" -> breadLength = "8in";
+            case "f" -> breadLength = "FootLong";
+            default ->{
+                System.err.println("❌ Invalid Entry");
+                createSandwich();
+            }
+        }
+        back(breadLength);
+//        boolean toasted = false;
+//        while (true) {
+//            System.out.println("Do you want it to be toasted(Yes/No) or type 'b' to go back");
+//            String input = scanner.nextLine();
+//            if (input.equalsIgnoreCase("yes")) {
+//                toasted = true;
+//                break;
+//            } else if (input.equalsIgnoreCase("no")) {
+//                toasted = false;
+//                break;
+//            } else if (input.equalsIgnoreCase("b")) {
+//                back(input);
+//            } else {
+//                System.out.println("Invalid Entry, Please type yes/no");
+//            }
+//        }
         Sandwich sandwich = new Sandwich(breadType, breadLength, toasted);
 
 
