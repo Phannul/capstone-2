@@ -2,7 +2,6 @@ package ui;
 
 import models.*;
 
-import java.util.Locale;
 import java.util.Scanner;
 import util.ReceiptWriter;
 public class UI {
@@ -313,6 +312,5 @@ options
             return null;
         }
     }
-
 }
 
