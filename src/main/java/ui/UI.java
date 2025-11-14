@@ -14,7 +14,7 @@ public class UI {
     //A starter method as a gate way into the application
     public void start(){
         boolean running = true;
-        System.out.println("==== Welcome To DELIcious ==== \n" +
+        System.out.println("==== Welcome To Drippy ==== \n" +
                 "How can We Help Today");
         while (running){
             System.out.println("""
@@ -196,12 +196,35 @@ options
                 "\n 2) Pepsi " +
                 "\n 3) Sprite " +
                 "\n 4) Water " +
-                "\n 5) Iced Tea");
-        System.out.println("Enter Drink Flavor (or type 'b' to go back): ");
+                "\n 5) Iced Tea" +
+                "\n B) back");
         String drinkFlavor = scanner.nextLine().strip();
+        switch (drinkFlavor){
+            case "1" -> drinkFlavor = "Coke";
+            case "2" -> drinkFlavor = "Pepsi";
+            case "3" -> drinkFlavor = "Sprite";
+            case "4" -> drinkFlavor = "Water";
+            case "5" -> drinkFlavor = "Iced Tea";
+            default -> {
+                System.err.println("❌Invalid Entry");
+                addDrink();
+            }
+        }
         back(drinkFlavor);
-        System.out.println("Enter Drink Size (Small/Medium/Large): ");
+        System.out.println("Enter Drink Size " +
+                "\n 1) Small" +
+                "\n 2) Medium" +
+                "\n 3) Large ");
         String drinkSize = scanner.nextLine().strip();
+        switch (drinkSize){
+            case "1" -> drinkSize = "Small";
+            case "2" -> drinkSize = "Medium";
+            case "3" -> drinkSize = "Large";
+            default -> {
+                System.out.println("❌ Invalid Entry");
+                addDrink();
+            }
+        }
         Drinks drink = new Drinks(drinkFlavor, drinkSize);
         order.addOrder(drink);
     }
@@ -230,7 +253,6 @@ options
         String code = getCoupon();
         order.setCoupon(code);
         if (order.getCoupon().isEmpty()){
-            order.orderSummary();
         }
         order.orderSummary();
         System.out.println("Type '1' to confirm the order or type 'b' to go back");
@@ -286,7 +308,8 @@ options
                 || lower.contains("chipotle") || lower.contains("ranch") ||
                 lower.contains("ketchup") || lower.contains("thousand island") || lower.contains("vinaigrette")) {
             return "sauce";
-        } else {
+        }
+        else {
             return null;
         }
     }
