@@ -89,6 +89,7 @@ options
             case "2" -> breadType = "wheat";
             case "3" -> breadType = "rye";
             case "4" -> breadType = "Wrap";
+            case "b" -> back(breadType);
             default -> {
                 System.err.println("❌ Invalid Entry");
                 createSandwich();
@@ -122,12 +123,13 @@ options
             case "4" -> breadLength = "4in";
             case "8" -> breadLength = "8in";
             case "f" -> breadLength = "FootLong";
+            case "b" -> back(breadLength);
             default ->{
                 System.err.println("❌ Invalid Entry");
                 createSandwich();
             }
         }
-        back(breadLength);
+
         Sandwich sandwich = new Sandwich(breadType, breadLength, toasted);
         System.out.println("Would you like any toppings? ");
         String iNeedTopping = scanner.nextLine();
@@ -231,12 +233,13 @@ options
             case "3" -> drinkFlavor = "Sprite";
             case "4" -> drinkFlavor = "Water";
             case "5" -> drinkFlavor = "Iced Tea";
+            case "b" -> back(drinkFlavor);
             default -> {
                 System.err.println("❌Invalid Entry");
                 addDrink();
             }
         }
-        back(drinkFlavor);
+
         System.out.println("Enter Drink Size " +
                 "\n 1) Small" +
                 "\n 2) Medium" +
@@ -272,12 +275,14 @@ options
             case "3" -> chipsType = "BBQ";
             case "4" -> chipsType = "Sour Cream";
             case "5" -> chipsType = "Hot Flaming Cheetos";
+            case "b" -> back(chipsType);
             default -> {
                 System.err.println("❌ Invalid Entry");
+
                 addChips();
             }
         }
-        back(chipsType);
+
         Chips chip = new Chips(chipsType);
         order.addOrder(chip);
     }
