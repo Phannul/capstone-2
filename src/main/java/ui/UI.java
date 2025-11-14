@@ -187,6 +187,33 @@ options
                 "🧀Cheeses: American| Provolone| Cheddar| Swiss\n" +
                 "Regulars: Lettuce| Peppers| Onions| Tomatoes| Jalapeños| Cucumbers| Pickles| Guacamole| Mushrooms\n");
     }
+    /*
+   This is the method responsible to match the topping name with their corresponding
+   category for pricing purposes
+    */
+    private String detectCategory(String toppingName) {
+        String lower = toppingName.toLowerCase();
+        if (lower.contains("steak") || lower.contains("ham") || lower.contains("salami") ||
+                lower.contains("roast beef") || lower.contains("chicken") || lower.contains("bacon")) {
+            return "meat";
+        } else if (lower.contains("cheddar") || lower.contains("swiss")
+                || lower.contains("american") || lower.contains("provolone")) {
+            return "cheese";
+        } else if (lower.contains("lettuce") || lower.contains("tomato")
+                || lower.contains("onion") || lower.contains("pickles")
+                || lower.contains("peppers") || lower.contains("mushroom")
+                || lower.contains("guacamole") || lower.contains("cucumber")
+                || lower.contains("jalapeño")) {
+            return "veggie";
+        } else if (lower.contains("mayo") || lower.contains("mustard")
+                || lower.contains("chipotle") || lower.contains("ranch") ||
+                lower.contains("ketchup") || lower.contains("thousand island") || lower.contains("vinaigrette")) {
+            return "sauce";
+        }
+        else {
+            return null;
+        }
+    }
     // an add drink method to add drink into an order
     private void addDrink(){
         System.out.println("\n 🥤 Drink Menu: " +
@@ -230,9 +257,26 @@ options
     // a method to add chips into the order
     private void addChips(){
         System.out.println("\n Chips Menu: " +
-                "\n Types: Lays | Doritos | BBq | Sour cream| HotFlaminCheetos");
-        System.out.println("Enter Chips Type (or type 'b' to go back): ");
+                "\n Types: " +
+                "\n 1) Lays " +
+                "\n 2) Doritos " +
+                "\n 3) BBq " +
+                "\n 4) Sour cream " +
+                "\n 5) Hot Flamin Cheetos" +
+                "\n B) back" +
+                "\n Enter chips here: ");
         String chipsType = scanner.nextLine().strip();
+        switch(chipsType){
+            case "1" -> chipsType = "Lays";
+            case "2" -> chipsType = "Doritos";
+            case "3" -> chipsType = "BBQ";
+            case "4" -> chipsType = "Sour Cream";
+            case "5" -> chipsType = "Hot Flaming Cheetos";
+            default -> {
+                System.err.println("❌ Invalid Entry");
+                addChips();
+            }
+        }
         back(chipsType);
         Chips chip = new Chips(chipsType);
         order.addOrder(chip);
@@ -266,12 +310,7 @@ options
             System.out.println("Failed to Confirm your order");
         }
     }
-    // a back method that takes back to the main order screen
-    private void back(String input){
-        if (input.equalsIgnoreCase("b")){
-            startNewOrder();
-        }
-    }
+
     // a method to prompt the user to enter their name during checkout
     public String getName(){
         System.out.println("What will be the Name for the Order: ");
@@ -285,32 +324,12 @@ options
         String code = scanner.nextLine().strip();
         return code;
     }
-    /*
-    This is the method responsible to match the topping name with their corresponding
-    category for pricing purposes
-     */
-    private String detectCategory(String toppingName) {
-        String lower = toppingName.toLowerCase();
-        if (lower.contains("steak") || lower.contains("ham") || lower.contains("salami") ||
-                lower.contains("roast beef") || lower.contains("chicken") || lower.contains("bacon")) {
-            return "meat";
-        } else if (lower.contains("cheddar") || lower.contains("swiss")
-                || lower.contains("american") || lower.contains("provolone")) {
-            return "cheese";
-        } else if (lower.contains("lettuce") || lower.contains("tomato")
-                || lower.contains("onion") || lower.contains("pickles")
-                || lower.contains("peppers") || lower.contains("mushroom")
-                || lower.contains("guacamole") || lower.contains("cucumber")
-                || lower.contains("jalapeño")) {
-            return "veggie";
-        } else if (lower.contains("mayo") || lower.contains("mustard")
-                || lower.contains("chipotle") || lower.contains("ranch") ||
-                lower.contains("ketchup") || lower.contains("thousand island") || lower.contains("vinaigrette")) {
-            return "sauce";
-        }
-        else {
-            return null;
+    // a back method that takes back to the main order screen
+    private void back(String input){
+        if (input.equalsIgnoreCase("b")){
+            startNewOrder();
         }
     }
+
 }
 
